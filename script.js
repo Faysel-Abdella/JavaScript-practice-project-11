@@ -56,6 +56,7 @@ function showLoading() {
 
 // Filter posts by input
 function filterPosts(e) {
+  // Change to upper case b/c of case sensetivness
   const term = e.target.value.toUpperCase();
   const posts = document.querySelectorAll(".post");
 
