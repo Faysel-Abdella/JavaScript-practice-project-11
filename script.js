@@ -2,7 +2,7 @@ const postsContainer = document.getElementById("posts-container");
 const loding = document.querySelector(".loader");
 const filter = document.getElementById("filter");
 
-let limit = 3;
+let limit = 5;
 let page = 1;
 
 async function getPosts() {
@@ -36,5 +36,27 @@ async function ShowPosts() {
   });
 }
 
+// Show loader and fecth more posts
+function showLoading() {
+  loding.classList.add("show");
+
+  setTimeout(() => {
+    loding.classList.remove("show");
+
+    setTimeout(() => {
+      page++;
+      ShowPosts();
+    }, 300);
+  }, 1000);
+}
+
 // Show initial post
 ShowPosts();
+
+window.addEventListener("scroll", () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    showLoading();
+  }
+});
