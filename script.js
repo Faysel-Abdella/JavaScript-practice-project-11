@@ -15,6 +15,9 @@ async function getPosts() {
   return data; // You have to await when you use this function
 }
 
+// Show initial post
+ShowPosts();
+
 // Show posts in DOM
 
 async function ShowPosts() {
@@ -37,6 +40,7 @@ async function ShowPosts() {
 }
 
 // Show loader and fecth more posts
+
 function showLoading() {
   loding.classList.add("show");
 
@@ -50,8 +54,22 @@ function showLoading() {
   }, 1000);
 }
 
-// Show initial post
-ShowPosts();
+// Filter posts by input
+function filterPosts(e) {
+  const term = e.target.value.toUpperCase();
+  const posts = document.querySelectorAll(".post");
+
+  posts.forEach((post) => {
+    const title = post.querySelector(".post-title").innerText.toUpperCase();
+    const body = post.querySelector(".post-body").innerText.toUpperCase();
+
+    if (title.indexOf(term) > -1 || body.indexOf(term) > -1) {
+      post.style.display = "flex";
+    } else {
+      post.style.display = "none";
+    }
+  });
+}
 
 window.addEventListener("scroll", () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -60,3 +78,5 @@ window.addEventListener("scroll", () => {
     showLoading();
   }
 });
+
+filter.addEventListener("input", filterPosts);
